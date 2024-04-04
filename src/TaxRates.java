@@ -74,18 +74,22 @@ public class TaxRates {
 
     // Basic testing
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Please enter the State: ");
-        String state = scan.nextLine();
-        System.out.println("How much does the item cost?");
-        double itemPrice = scan.nextDouble();
+//        Scanner scan = new Scanner(System.in);
+//        System.out.println("Please enter the State: ");
+//        String state = scan.nextLine();
+//        System.out.println("How much does the item cost?");
+//        double itemPrice = scan.nextDouble();
+//
+//
+//        if (state.equals("Alabama") || state.equals("Georgia")) {
+//            System.out.println("The item price is: " + (itemPrice + (itemPrice * TAX_PCT_RANK_22)) + " after tax");
+//        }
+//
 
-
-        if (state.equals("Alabama") || state.equals("Georgia")) {
-            System.out.println("The item price is: " + (itemPrice + (itemPrice * TAX_PCT_RANK_22)) + " after tax");
-        }
-
-
+        State alabama = new State("Alabama", "AL", .04);
+        alabama.calculateTax(10);
+        State alaska = new State("Alaska", "AK", 0);
+        alaska.calculateTax(1000);
     }
 
 }
