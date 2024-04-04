@@ -1,4 +1,5 @@
-public class TaxCalcModel {
+import java.util.Scanner;
+public class TaxRates {
     // California
     private static final double TAX_PCT_RANK_1 = .0725;
 
@@ -71,5 +72,11 @@ public class TaxCalcModel {
     // Alaska, Delaware, Montana, New Hampshire, Oregon
     private static final double NO_TAX = 0;
 
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Enter answer");
+        double number = scan.nextDouble();
+        System.out.println(number);
+    }
 
 }
