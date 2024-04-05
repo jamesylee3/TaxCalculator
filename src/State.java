@@ -14,6 +14,6 @@ public class State {
     public void calculateTax (double itemPrice) {
         double priceAfterTax = (itemPrice + (itemPrice * taxRate));
         System.out.println(name + " has a tax percentage of " + (taxRate * 100) + "%. The total price after tax is: $" + priceAfterTax);
-        }
+    }
 
 }
