@@ -8,17 +8,45 @@ public class GUI {
     JButton button;
     JFrame frame = new JFrame("Tax Calculator");
     JLabel title = new JLabel("Tax Calculator");
+    JLabel purchaseLabel = new JLabel("Purchase Amount: ");
+    JLabel stateLabel = new JLabel("Select Your State: ");
+    JLabel resultLabel = new JLabel("Your Item Will Cost: ");
+
 
     GUI() {
-        // Top Text
-        title.setHorizontalAlignment(JLabel.CENTER);
-//        title.setBounds(250,50,300,50);
+        // Title Text
+        title.setFont(new Font("MV Boli",Font.BOLD,30));
+        JPanel textPan = new JPanel();
+        textPan.setBounds(225,40,300,100);
+        textPan.add(title);
 
+
+        // Purchase Amount Text
+        purchaseLabel.setFont(new Font("MV Boli",Font.BOLD,20));
+        JPanel purPan = new JPanel();
+        purPan.setBounds(100,200,200,50);
+        purPan.add(purchaseLabel);
+
+        // State Text
+        stateLabel.setFont(new Font("MV Boli",Font.BOLD,20));
+        JPanel stateTextPan = new JPanel();
+        stateTextPan.setBounds(100, 275, 200,50);
+        stateTextPan.add(stateLabel);
+
+        // Result Text
+        resultLabel.setFont(new Font("MV Boli",Font.BOLD,20));
+        JPanel resultPan = new JPanel();
+        resultPan.setBounds(64, 500, 300,50);
+        resultPan.add(resultLabel);
 
         // Frame
-        frame.setSize(500,500);
+        frame.setLayout(null);
+        frame.setSize(750,700);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.add(textPan);
+        frame.add(purPan);
+        frame.add(stateTextPan);
+        frame.add(resultPan);
         frame.setVisible(true);
-        frame.add(title);
     }
 }
