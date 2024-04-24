@@ -1,11 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GUI {
+public class GUI implements ActionListener {
 
     JTextField purchaseAmtField;
     JButton calculateButton;
+    JButton[] keyButtons = new JButton[11];
+    JPanel keyPanel = new JPanel();
     JFrame frame = new JFrame("Tax Calculator");
     JLabel title = new JLabel("Tax Calculator");
     JLabel purchaseLabel = new JLabel("Purchase Amount: ");
@@ -81,36 +84,64 @@ public class GUI {
         // Title Text
         title.setFont(new Font("MV Boli",Font.BOLD,30));
         JPanel textPan = new JPanel();
-        textPan.setBounds(225,40,300,100);
+        textPan.setBounds(225,40,300,80);
         textPan.add(title);
 
         // Purchase Amount Text
         purchaseLabel.setFont(new Font("MV Boli",Font.BOLD,20));
         JPanel purPan = new JPanel();
-        purPan.setBounds(100,200,200,50);
+        purPan.setBounds(100,120,200,50);
         purPan.add(purchaseLabel);
 
         // State Text
         stateLabel.setFont(new Font("MV Boli",Font.BOLD,20));
         JPanel stateTextPan = new JPanel();
-        stateTextPan.setBounds(100, 275, 200,50);
+        stateTextPan.setBounds(100, 205, 200,50);
         stateTextPan.add(stateLabel);
 
         // Result Text
         resultLabel.setFont(new Font("MV Boli",Font.BOLD,20));
         JPanel resultPan = new JPanel();
-        resultPan.setBounds(64, 495, 250,50);
+        resultPan.setBounds(64, 565, 250,50);
         resultPan.add(resultLabel);
 
         // TextFields
-        purchaseTF.setBounds(350,205,300,30);
-        resultTF.setBounds(350,500,300,30);
-        purchaseTF.setEditable(false);
+        purchaseTF.setBounds(350,130,300,30);
+        purchaseTF.setEditable(true);
+        resultTF.setBounds(350,570,300,30);
         resultTF.setEditable(false);
+
+        // Keypad Buttons
+        for (int i = 0; i <= 9; i++) {
+            keyButtons[i] = new JButton(String.valueOf(i));
+            keyButtons[i].addActionListener(this);
+            keyButtons[i].setFocusable(false);
+        }
+        keyButtons[10] = new JButton(".");
+        keyButtons[10].addActionListener(this);
+        keyButtons[10].setFocusable(false);
+
+        keyPanel.setBounds(185,270,400,200);
+        keyPanel.setLayout(new GridLayout(4,4,5,5));
+//        keyPanel.setBackground(Color.gray);
+        keyPanel.add(keyButtons[0]);
+        keyPanel.add(keyButtons[1]);
+        keyPanel.add(keyButtons[2]);
+        keyPanel.add(keyButtons[3]);
+        keyPanel.add(keyButtons[4]);
+        keyPanel.add(keyButtons[5]);
+        keyPanel.add(keyButtons[6]);
+        keyPanel.add(keyButtons[7]);
+        keyPanel.add(keyButtons[8]);
+        keyPanel.add(keyButtons[9]);
+        keyPanel.add(keyButtons[10]);
+
+
+
 
         // Calculate Button
         calculateButton = new JButton();
-        calculateButton.setBounds(220,350,330,100);
+        calculateButton.setBounds(220,480,330,60);
         calculateButton.setText("CALCULATE");
         calculateButton.setFont(new Font("MV Boli",Font.BOLD,24));
         calculateButton.setFocusable(false);
@@ -118,7 +149,7 @@ public class GUI {
         // ComboBox
         stateBox = new JComboBox(statesArray);
         JPanel comboBoxPan = new JPanel();
-        comboBoxPan.setBounds(257,280,300,30);
+        comboBoxPan.setBounds(257,210,300,30);
         comboBoxPan.add(stateBox);
 
         // Frame
@@ -133,6 +164,12 @@ public class GUI {
         frame.add(resultTF);
         frame.add(comboBoxPan);
         frame.add(calculateButton);
+        frame.add(keyPanel);
         frame.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }
