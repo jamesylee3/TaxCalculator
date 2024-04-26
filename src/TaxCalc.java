@@ -1,6 +1,4 @@
-import java.sql.SQLOutput;
-import java.util.Scanner;
-public class TaxRates {
+public class TaxCalc {
 
     // Basic testing
     public static void main(String[] args) {

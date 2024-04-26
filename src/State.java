@@ -1,9 +1,9 @@
 import java.util.Scanner;
 public class State {
 
-    public String name;
-    public String abbreviation;
-    double taxRate;
+    private String name;
+    private String abbreviation;
+    private double taxRate;
 
     public State(String name, String abbreviation, double taxRate) {
         this.name = name;

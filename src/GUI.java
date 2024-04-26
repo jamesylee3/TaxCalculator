@@ -7,7 +7,7 @@ public class GUI implements ActionListener {
 
     JTextField purchaseAmtField;
     JButton calculateButton;
-    JButton[] keyButtons = new JButton[11];
+    JButton[] keyButtons = new JButton[12];
     JPanel keyPanel = new JPanel();
     JFrame frame = new JFrame("Tax Calculator");
     JLabel title = new JLabel("Tax Calculator");
@@ -107,7 +107,7 @@ public class GUI implements ActionListener {
 
         // TextFields
         purchaseTF.setBounds(350,130,300,30);
-        purchaseTF.setEditable(true);
+        purchaseTF.setEditable(false);
         resultTF.setBounds(350,570,300,30);
         resultTF.setEditable(false);
 
@@ -120,6 +120,9 @@ public class GUI implements ActionListener {
         keyButtons[10] = new JButton(".");
         keyButtons[10].addActionListener(this);
         keyButtons[10].setFocusable(false);
+        keyButtons[11] = new JButton("CLR");
+        keyButtons[11].addActionListener(this);
+        keyButtons[11].setFocusable(false);
 
         keyPanel.setBounds(185,270,400,200);
         keyPanel.setLayout(new GridLayout(4,4,5,5));
@@ -135,8 +138,7 @@ public class GUI implements ActionListener {
         keyPanel.add(keyButtons[8]);
         keyPanel.add(keyButtons[9]);
         keyPanel.add(keyButtons[10]);
-
-
+        keyPanel.add(keyButtons[11]);
 
 
         // Calculate Button
@@ -145,12 +147,14 @@ public class GUI implements ActionListener {
         calculateButton.setText("CALCULATE");
         calculateButton.setFont(new Font("MV Boli",Font.BOLD,24));
         calculateButton.setFocusable(false);
+        calculateButton.addActionListener(this);
 
         // ComboBox
         stateBox = new JComboBox(statesArray);
         JPanel comboBoxPan = new JPanel();
         comboBoxPan.setBounds(257,210,300,30);
         comboBoxPan.add(stateBox);
+        stateBox.addActionListener(this);
 
         // Frame
         frame.setLayout(null);
@@ -171,5 +175,33 @@ public class GUI implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-    }
+        State selectedState = (State) stateBox.getSelectedItem();
+        double stateTaxRate = selectedState.getTaxRate();
+
+        // Number Buttons
+        for (int i = 0; i < 10; i++) {
+            if (e.getSource() == keyButtons[i]) {
+                purchaseTF.setText(purchaseTF.getText().concat(String.valueOf(i)));
+            }
+        }
+
+        // . Button
+        if (e.getSource() == keyButtons[10]) {
+            purchaseTF.setText(purchaseTF.getText().concat("."));
+        }
+
+        // Clear Button
+        if (e.getSource() == keyButtons[11]) {
+            purchaseTF.setText("");
+        }
+
+        // Calculate Button
+        if (e.getSource() == calculateButton) {
+            double itemValue = Double.parseDouble(purchaseTF.getText());
+            double taxAmount = itemValue * stateTaxRate;
+            double result = Math.round((itemValue + taxAmount) * Math.pow(10,2)) / Math.pow(10,2);
+            resultTF.setText(String.valueOf(result));
+
+            }
+        }
 }
