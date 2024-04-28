@@ -2,8 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class GUI implements ActionListener {
+public class GUI implements ActionListener, KeyListener {
 
     JTextField purchaseAmtField;
     JButton calculateButton;
@@ -83,25 +85,33 @@ public class GUI implements ActionListener {
 
         // Title Text
         title.setFont(new Font("MV Boli",Font.BOLD,30));
+        title.setForeground(Color.WHITE);
         JPanel textPan = new JPanel();
+        textPan.setBackground(Color.BLACK);
         textPan.setBounds(225,40,300,80);
         textPan.add(title);
 
         // Purchase Amount Text
         purchaseLabel.setFont(new Font("MV Boli",Font.BOLD,20));
+        purchaseLabel.setForeground(Color.white);
         JPanel purPan = new JPanel();
+        purPan.setBackground(Color.BLACK);
         purPan.setBounds(100,120,200,50);
         purPan.add(purchaseLabel);
 
         // State Text
         stateLabel.setFont(new Font("MV Boli",Font.BOLD,20));
+        stateLabel.setForeground(Color.WHITE);
         JPanel stateTextPan = new JPanel();
+        stateTextPan.setBackground(Color.BLACK);
         stateTextPan.setBounds(100, 205, 200,50);
         stateTextPan.add(stateLabel);
 
         // Result Text
         resultLabel.setFont(new Font("MV Boli",Font.BOLD,20));
+        resultLabel.setForeground(Color.WHITE);
         JPanel resultPan = new JPanel();
+        resultPan.setBackground(Color.BLACK);
         resultPan.setBounds(64, 565, 250,50);
         resultPan.add(resultLabel);
 
@@ -110,6 +120,7 @@ public class GUI implements ActionListener {
         purchaseTF.setEditable(false);
         resultTF.setBounds(350,570,300,30);
         resultTF.setEditable(false);
+        purchaseTF.addKeyListener(this);
 
         // Keypad Buttons
         for (int i = 0; i <= 9; i++) {
@@ -126,33 +137,29 @@ public class GUI implements ActionListener {
 
         keyPanel.setBounds(185,270,400,200);
         keyPanel.setLayout(new GridLayout(4,4,5,5));
-//        keyPanel.setBackground(Color.gray);
-        keyPanel.add(keyButtons[0]);
-        keyPanel.add(keyButtons[1]);
-        keyPanel.add(keyButtons[2]);
-        keyPanel.add(keyButtons[3]);
-        keyPanel.add(keyButtons[4]);
-        keyPanel.add(keyButtons[5]);
-        keyPanel.add(keyButtons[6]);
-        keyPanel.add(keyButtons[7]);
-        keyPanel.add(keyButtons[8]);
-        keyPanel.add(keyButtons[9]);
-        keyPanel.add(keyButtons[10]);
-        keyPanel.add(keyButtons[11]);
+        keyPanel.setBackground(Color.BLACK);
 
+        for (int i = 0; i < 12; i++) {
+            keyPanel.add(keyButtons[i]);
+            keyButtons[i].setForeground(Color.white);
+            keyButtons[i].setBackground(Color.BLACK);
+        }
 
         // Calculate Button
         calculateButton = new JButton();
         calculateButton.setBounds(220,480,330,60);
         calculateButton.setText("CALCULATE");
         calculateButton.setFont(new Font("MV Boli",Font.BOLD,24));
+        calculateButton.setBackground(new Color(35,100,35));
+        calculateButton.setForeground(Color.WHITE);
         calculateButton.setFocusable(false);
         calculateButton.addActionListener(this);
 
         // ComboBox
         stateBox = new JComboBox(statesArray);
         JPanel comboBoxPan = new JPanel();
-        comboBoxPan.setBounds(257,210,300,30);
+        comboBoxPan.setBackground(Color.BLACK);
+        comboBoxPan.setBounds(259,210,300,30);
         comboBoxPan.add(stateBox);
         stateBox.addActionListener(this);
 
@@ -160,6 +167,7 @@ public class GUI implements ActionListener {
         frame.setLayout(null);
         frame.setSize(750,700);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.getContentPane().setBackground(Color.BLACK);
         frame.add(textPan);
         frame.add(purPan);
         frame.add(stateTextPan);
@@ -169,6 +177,7 @@ public class GUI implements ActionListener {
         frame.add(comboBoxPan);
         frame.add(calculateButton);
         frame.add(keyPanel);
+        frame.setResizable(false);
         frame.setVisible(true);
     }
 
@@ -201,7 +210,36 @@ public class GUI implements ActionListener {
             double taxAmount = itemValue * stateTaxRate;
             double result = Math.round((itemValue + taxAmount) * Math.pow(10,2)) / Math.pow(10,2);
             resultTF.setText(String.valueOf(result));
-
             }
         }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        State selectedState = (State) stateBox.getSelectedItem();
+        double stateTaxRate = selectedState.getTaxRate();
+        char keyValue = e.getKeyChar();
+
+        if (keyValue == '1' || keyValue == '2' || keyValue == '3' || keyValue == '4' || keyValue == '5' ||
+                keyValue == '6' || keyValue == '7' || keyValue == '8' || keyValue == '9' ||
+                keyValue == '0' || keyValue == '.') {
+            purchaseTF.setText(purchaseTF.getText().concat(String.valueOf(keyValue)));
+        }
+        if (keyValue == '\n') {
+            double itemValue = Double.parseDouble(purchaseTF.getText());
+            double taxAmount = itemValue * stateTaxRate;
+            double result = Math.round((itemValue + taxAmount) * Math.pow(10,2)) / Math.pow(10,2);
+            resultTF.setText(String.valueOf(result));
+        }
+        else if (keyValue == '\b') {
+            purchaseTF.setText("");
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+    }
 }
